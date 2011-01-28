@@ -52,11 +52,11 @@ user_tag_predicate
 	;
 	
 uid_tag_predicate
-	: '@uid' '=' r1=(Digit+) -> ^(UID_PREDICATE $r1)
+	: '@uid' '=' n=IntegerLiteral -> ^(UID_PREDICATE $n)
 	;
 
 changeset_tag_predicate
-	: '@changeset' '=' r1=(Digit+) -> ^(CHANGESET_PREDICATE $r1)
+	: '@changeset' '=' r1=IntegerLiteral -> ^(CHANGESET_PREDICATE $r1)
 	;
 
 child_element_predicate
@@ -97,8 +97,13 @@ Letter
 
 fragment Digit : '0'..'9';
 fragment WS: (' '|'\t'|'\u000C');
+
+IntegerLiteral
+	: '0' | (('1'..'9') Digit*)
+	;
+
 DecimalLiteral
-	: '-'? Digit+ ('.' Digit*)? (('e'|'E') ('+'|'-')? Digit+)?
+	: '-'? IntegerLiteral ('.' Digit*)? (('e'|'E') ('+'|'-')? IntegerLiteral)?
 	;
 
 StringLiteral : (Letter | Digit | WS | '.' | '-' | '\\|')+;
