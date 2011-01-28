@@ -98,8 +98,7 @@ Letter
 fragment Digit : '0'..'9';
 fragment WS: (' '|'\t'|'\u000C');
 DecimalLiteral
-	: (Digit+ ('.' Digit*)?)
-	| ('-' Digit+ ('.' Digit*)?)
+	: '-'? Digit+ ('.' Digit*)? (('e'|'E') ('+'|'-')? Digit+)?
 	;
 
 StringLiteral : (Letter | Digit | WS | '.' | '-' | '\\|')+;
