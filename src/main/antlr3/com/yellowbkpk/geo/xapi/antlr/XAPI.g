@@ -20,10 +20,25 @@ tokens {
 
 @header {
 package com.yellowbkpk.geo.xapi.antlr;
+import java.util.List;
+import java.util.LinkedList;
 }
 
 @lexer::header {
 package com.yellowbkpk.geo.xapi.antlr;
+}
+
+@members {
+    private List<String> errors = new LinkedList<String>();
+    public void displayRecognitionError(String[] tokenNames,
+                                        RecognitionException e) {
+        String hdr = getErrorHeader(e);
+        String msg = getErrorMessage(e, tokenNames);
+        errors.add(hdr + " " + msg);
+    }
+    public List<String> getErrors() {
+        return errors;
+    }
 }
 
 xapi
@@ -106,4 +121,4 @@ DecimalLiteral
 	: '-'? IntegerLiteral ('.' Digit*)? (('e'|'E') ('+'|'-')? IntegerLiteral)?
 	;
 
-StringLiteral : (Letter | Digit | WS | '.' | '-' | '\\|')+;
+StringLiteral : (Letter | Digit | WS | '.' | '-' | '\\|' | ':' )+;
